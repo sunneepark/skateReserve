@@ -1,8 +1,8 @@
 const path = require('path');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const appDirectory = path.resolve(__dirname, '../');
+const outputPath = path.resolve(appDirectory, 'web/public/');
 
 const babelLoaderConfiguration = {
   test: /\.js$/,
@@ -22,7 +22,7 @@ module.exports = {
   ],
   output: {
     filename: 'bundle.web.js',
-    path: path.resolve(appDirectory, 'dist')
+    path: outputPath
   },
 
   module: {
@@ -31,7 +31,7 @@ module.exports = {
     ]
   },
 
-  plugins:[new HtmlWebpackPlugin({ template: './public/index.html'})],
+  plugins: [new HtmlWebpackPlugin({ template: path.resolve(appDirectory, 'public/index.html') })],
 
   resolve: {
     alias: {

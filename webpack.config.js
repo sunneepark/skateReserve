@@ -1,43 +1,40 @@
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
+const HTMLWebpackPlugin = require('html-webpack-plugin')
 
-const appDirectory = path.resolve(__dirname, '../');
-
-const babelLoaderConfiguration = {
-  test: /\.js$/,
-  use: {
-    loader: 'babel-loader',
-    options: {
-      cacheDirectory: true,
-      presets: ['@babel/preset-react'],
-      plugins: ['react-native-web']
-    }
-  }
-};
+const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
+    template: path.resolve(__dirname, './public/index.html'),
+    inject: 'body'
+})
 
 module.exports = {
-  entry: [
-    path.resolve(appDirectory, 'index.web.js')
-  ],
-  output: {
-    filename: 'bundle.web.js',
-    path: path.resolve(appDirectory, 'dist')
-  },
-
-  module: {
-    rules: [
-      babelLoaderConfiguration,
-    ]
-  },
-
-  plugins:[new HtmlWebpackPlugin({ template: './public/index.html'})],
-
-  resolve: {
-    alias: {
-      'react-native$': 'react-native-web'
+    entry: path.join(__dirname, 'index.web.js'),
+    output: {
+        filename: 'bundle.js',
+        path: path.join(__dirname, '/build'),
     },
-    extensions: [ '.web.js', '.js' ]
-  }
+    resolve: {
+        alias: {
+            'react-native$': 'react-native-web',
+        },
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules\/(?!()\/).*/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-react'],
+                    },
+                },
+            },
+        ],
+    },
+    plugins: [HTMLWebpackPluginConfig],
+    devServer: {
+        open: true,
+        historyApiFallback: true,
+        hot: true,
+    },
 }
-

@@ -9,7 +9,7 @@
     "start": "react-native start",
     "test": "jest",
     "build-react": "webpack --mode production",
-    "start-react": "webpack serve --config ./web/webpack.config.js --mode development"
+    "start-react": "webpack serve --config ./webpack.config.js --mode development"
   },
   "dependencies": {
     "react": "18.2.0",
